@@ -7,7 +7,7 @@ import type {
 } from 'storefrontapi.generated';
 import {Aside} from '~/components/Aside';
 import {Footer} from '~/components/Footer';
-import {Header, HeaderMenu} from '~/components/Header';
+import {Header} from '~/components/Header';
 import {CartMain} from '~/components/Cart';
 import {
   PredictiveSearchForm,
@@ -33,14 +33,9 @@ export function Layout({
     <>
       <CartAside cart={cart} />
       <SearchAside />
-      <MobileMenuAside menu={header.menu} />
-      <Header header={header} cart={cart} isLoggedIn={isLoggedIn} />
+      {header && <Header />}
       <main>{children}</main>
-      <Suspense>
-        <Await resolve={footer}>
-          {(footer) => <Footer menu={footer.menu} />}
-        </Await>
-      </Suspense>
+      <Footer />
     </>
   );
 }
@@ -87,9 +82,5 @@ function SearchAside() {
 }
 
 function MobileMenuAside({menu}: {menu: HeaderQuery['menu']}) {
-  return (
-    <Aside id="mobile-menu-aside" heading="MENU">
-      <HeaderMenu menu={menu} viewport="mobile" />
-    </Aside>
-  );
+  return <Aside id="mobile-menu-aside" heading="MENU"></Aside>;
 }
